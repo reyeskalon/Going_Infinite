@@ -1,0 +1,11 @@
+C:\Users\reyes\Projects\going_infinite\bin\Debug\net6.0\publish\going_infinite.exe
+C:\Users\reyes\Projects\going_infinite\bin\Debug\net6.0\publish\appsettings.Development.json
+C:\Users\reyes\Projects\going_infinite\bin\Debug\net6.0\publish\appsettings.json
+C:\Users\reyes\Projects\going_infinite\bin\Debug\net6.0\publish\going_infinite.dll
+C:\Users\reyes\Projects\going_infinite\bin\Debug\net6.0\publish\going_infinite.deps.json
+C:\Users\reyes\Projects\going_infinite\bin\Debug\net6.0\publish\going_infinite.runtimeconfig.json
+C:\Users\reyes\Projects\going_infinite\bin\Debug\net6.0\publish\going_infinite.pdb
+C:\Users\reyes\Projects\going_infinite\bin\Debug\net6.0\publish\Microsoft.OpenApi.dll
+C:\Users\reyes\Projects\going_infinite\bin\Debug\net6.0\publish\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\reyes\Projects\going_infinite\bin\Debug\net6.0\publish\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\reyes\Projects\going_infinite\bin\Debug\net6.0\publish\Swashbuckle.AspNetCore.SwaggerUI.dll

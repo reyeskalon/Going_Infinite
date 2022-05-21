@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "dyDA7EsdS/uilJndFietx83bBkJKvdrYsKo6IlWiG+anvE/4svk/hwt1GiOmh8Tb//+h8j52oSPID77DcmMEhA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\reyes\\Projects\\going_infinite\\MagicCardJsonConverter\\MagicCardJsonConverter\\MagicCardJsonConverter.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\reyes\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
