@@ -53,11 +53,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\reyes\\Projects\\going_infinite\\MagicCardJsonConverter\\MagicCardJsonConverter\\MagicCardJsonConverter.csproj",
+      "projectUniqueName": "C:\\Users\\reyes\\Projects\\going_infinite\\Going_Infinite\\MagicCardJsonConverter\\MagicCardJsonConverter\\MagicCardJsonConverter.csproj",
       "projectName": "MagicCardJsonConverter",
-      "projectPath": "C:\\Users\\reyes\\Projects\\going_infinite\\MagicCardJsonConverter\\MagicCardJsonConverter\\MagicCardJsonConverter.csproj",
+      "projectPath": "C:\\Users\\reyes\\Projects\\going_infinite\\Going_Infinite\\MagicCardJsonConverter\\MagicCardJsonConverter\\MagicCardJsonConverter.csproj",
       "packagesPath": "C:\\Users\\reyes\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\reyes\\Projects\\going_infinite\\MagicCardJsonConverter\\MagicCardJsonConverter\\obj\\",
+      "outputPath": "C:\\Users\\reyes\\Projects\\going_infinite\\Going_Infinite\\MagicCardJsonConverter\\MagicCardJsonConverter\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\reyes\\AppData\\Roaming\\NuGet\\NuGet.Config",

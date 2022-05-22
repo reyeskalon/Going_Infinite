@@ -3,7 +3,7 @@ using MagicCardJsonConverter;
 
 CardSorter sorter = new CardSorter();
 
-List<Card> cards = JsonConvert.DeserializeObject<List<Card>>(File.ReadAllText("C:/Users/reyes/Projects/going_infinite/Vue/src/magic-cards.json"));
+List<Card> cards = JsonConvert.DeserializeObject<List<Card>>(File.ReadAllText("C:/Users/reyes/Projects/going_infinite/Going_Infinite/MagicCardJsonConverter/default-cards-20220521210604.json"));
 List<ReducedCard> magicCards = sorter.CardReducer(cards);
 
 
@@ -45,7 +45,7 @@ newCappenaCards.AddRange(newCappenaCardsMultiColor);
 newCappenaCards.AddRange(newCappenaCardsColorless);
 newCappenaCards.AddRange(newCappenaCardsLands);
 
-StreamWriter sw = new StreamWriter("C:/Users/reyes/Projects/going_infinite/Vue/src/NewCappenaCards.json");
+StreamWriter sw = new StreamWriter("C:/Users/reyes/Projects/going_infinite/Going_Infinite/Vue/src/NewCappenaCards.json");
 sw.WriteLine('[');
 for (int i = 0; i < newCappenaCards.Count; i++)
 {
@@ -64,7 +64,7 @@ for (int i = 0; i < newCappenaCards.Count; i++)
 sw.WriteLine(']');
 sw.Close();
 
-sw = new StreamWriter("C:/Users/reyes/Projects/going_infinite/Vue/src/InsertStreetsOfNewCappenaCardData.sql");
+sw = new StreamWriter("C:/Users/reyes/Projects/going_infinite/Going_Infinite/Vue/src/InsertStreetsOfNewCappenaCardData.sql");
 foreach (ReducedCard card in newCappenaCards)
 {
     string colors = "";

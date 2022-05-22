@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dyDA7EsdS/uilJndFietx83bBkJKvdrYsKo6IlWiG+anvE/4svk/hwt1GiOmh8Tb//+h8j52oSPID77DcmMEhA==",
+  "dgSpecHash": "I+X4394t+QholXvGDI9kMtcyP6hI9IEcAPtpYwk2cL+fgBGF7bC+A8EOM7Y42/A6Is5jIm9CkZ4eSFIhW5/j7g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\reyes\\Projects\\going_infinite\\MagicCardJsonConverter\\MagicCardJsonConverter\\MagicCardJsonConverter.csproj",
+  "projectFilePath": "C:\\Users\\reyes\\Projects\\going_infinite\\Going_Infinite\\MagicCardJsonConverter\\MagicCardJsonConverter\\MagicCardJsonConverter.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\reyes\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
   ],
