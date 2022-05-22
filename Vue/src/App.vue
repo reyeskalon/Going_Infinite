@@ -28,8 +28,13 @@ export default {
     margin-right: 10px;
     text-decoration: none;
     color: white;
+    height: 48px;
+    border-top:solid 2px rgba(236, 153, 75, 0);
+    display: flex;
+    align-items: center;
   }
   .link:hover{
     color: #EC994B;
+    border-top-color: rgba(236, 153, 75, 1);;
   }
 </style>

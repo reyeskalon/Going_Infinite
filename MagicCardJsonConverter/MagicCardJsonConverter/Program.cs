@@ -3,7 +3,7 @@ using MagicCardJsonConverter;
 
 CardSorter sorter = new CardSorter();
 
-List<Card> cards = JsonConvert.DeserializeObject<List<Card>>(File.ReadAllText("C:/Users/reyes/Projects/going_infinite/Going_Infinite/MagicCardJsonConverter/default-cards-20220521210604.json"));
+List<Card> cards = JsonConvert.DeserializeObject<List<Card>>(File.ReadAllText("C:/Users/reyes/Projects/going_infinite/oracle-cards-20220522090149.json"));
 List<ReducedCard> magicCards = sorter.CardReducer(cards);
 
 
