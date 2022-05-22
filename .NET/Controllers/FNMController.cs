@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using GoingInfinite.DAO;
 using GoingInfinite.Models;
+
 namespace GoingInfinite.Controllers
 {
     [ApiController]
@@ -20,9 +21,9 @@ namespace GoingInfinite.Controllers
             return FNMDao.GetEventsByPlayer(playerId);
         }
         [HttpPost]
-        public FNMEvent AddNewFNMEvent()
+        public FNMEvent AddNewFNMEvent(FNMEvent draftEvent)
         {
-            return FNMDao.AddNewFNMEvent();
+            return FNMDao.AddNewFNMEvent(draftEvent);
         }
     }
 }
