@@ -2,81 +2,118 @@
     <div id="deck">
         <img id="deckArt" :src="deckArt">
         <div id="colors">
-            <div id="white" class="color" v-if="whitePercent > 0.05"></div>
-            <div id="blue" class="color" v-if="bluePercent > 0.05"></div>
-            <div id="black" class="color" v-if="blackPercent > 0.05"></div>
-            <div id="red" class="color" v-if="redPercent > 0.05"></div>
-            <div id="green" class="color" v-if="greenPercent > 0.05"></div>
+            <div :id="`white${iteration}`" class="color" v-if="whitePercent > 0.05"></div>
+            <div :id="`blue${iteration}`" class="color" v-if="bluePercent > 0.05"></div>
+            <div :id="`black${iteration}`" class="color" v-if="blackPercent > 0.05"></div>
+            <div :id="`red${iteration}`" class="color" v-if="redPercent > 0.05"></div>
+            <div :id="`green${iteration}`" class="color" v-if="greenPercent > 0.05"></div>
         </div>
         <p>Deck #{{deck.deckId}}</p>
     </div>
 </template>
 
 <script>
-import CardService from '../services/CardService'
 export default{
-    props: ['deck'],
+    props: ['deck', 'iteration'],
     data()  {
         return {
-            currentDeck : {},
             deckArt: "",
             whitePercent: 0,
             bluePercent: 0,
             blackPercent: 0,
             redPercent: 0,
             greenPercent: 0,
+            whiteColor: "#FFFCD3",
+            blueColor: "#A9DCEF",
+            blackColor: "#C6BFB9",
+            redColor: "#ECA285",
+            greenColor: "#90CDA3",
+            colorBreakdownWidth : 265,
+            count : this.iteration,
         }
     },
     methods: {
-        colorPercentage(color){
-            const cards = this.currentDeck.cards;
+        colorBreakdown(){
+            const cards = this.deck.cards;
             const totalColors = this.totalColorSymbols;
-            let colorCount = 0.0;
+            let whiteCount = 0;
+            let blueCount = 0;
+            let blackCount = 0;
+            let redCount = 0;
+            let greenCount = 0;
             for(let i = 0; i < cards.length; i++){
                 for(let j = 0; j < cards[i].manaCost.length; j++){
-                    if(cards[i].manaCost[j] == color){
-                        colorCount += 1;
+                    if(cards[i].manaCost[j] == '{' || cards[i].manaCost == '}'){
+                        continue;
+                    }
+                    else if(cards[i].manaCost[j] == 'W'){
+                        whiteCount += 1;
+                    }
+                    else if(cards[i].manaCost[j] == 'U'){
+                        blueCount += 1;
+                    }
+                    else if(cards[i].manaCost[j] == 'B'){
+                        blackCount += 1;
+                    }
+                    else if(cards[i].manaCost[j] == 'R'){
+                        redCount += 1;
+                    }
+                    else if(cards[i].manaCost[j] == 'G'){
+                        greenCount += 1;
                     }
                 }
             }
-            let percentage = colorCount / totalColors;
-            return percentage;
+            this.whitePercent = Math.round((whiteCount / totalColors) * 100) / 100;
+            this.bluePercent = Math.round((blueCount / totalColors) * 100) / 100;
+            this.blackPercent = Math.round((blackCount / totalColors) * 100) / 100;
+            this.redPercent = Math.round((redCount / totalColors) * 100) / 100;
+            this.greenPercent = Math.round((greenCount / totalColors) * 100) / 100;
         },
+        setColorBreakdown(){
+            const width = this.colorBreakdownWidth;
+
+            let whiteBar = document.getElementById(`white${this.iteration}`);
+            let blueBar =  document.getElementById(`blue${this.iteration}`);
+            let blackBar = document.getElementById(`black${this.iteration}`);
+            let redBar = document.getElementById(`red${this.iteration}`);
+            let greenBar = document.getElementById(`green${this.iteration}`);
+
+            if(this.whitePercent > 0.05){
+                whiteBar.style.width = `${this.whitePercent * width}px`;
+                whiteBar.style.backgroundColor = this.whiteColor;
+            }
+            if(this.bluePercent > 0.05){
+                blueBar.style.width = `${this.bluePercent * width}px`;
+                blueBar.style.backgroundColor = this.blueColor;
+            }
+            if(this.blackPercent > 0.05){
+                blackBar.style.width = `${this.blackPercent * width}px`;
+                blackBar.style.backgroundColor = this.blackColor;
+            }
+            if(this.redPercent > 0.05){
+                redBar.style.width = `${this.redPercent * width}px`;
+                redBar.style.backgroundColor = this.redColor;
+            }
+            if(this.greenPercent > 0.05){
+                greenBar.style.width = `${this.greenPercent * width}px`;
+                greenBar.style.backgroundColor = this.greenColor;
+            }  
+        }
     },
     async created(){
-        this.currentDeck = this.deck;
-        let fullCards = [];
-        let cards = this.deck.cards;
-        for(const [key, value] of Object.entries(cards)){
-            const data = await (await CardService.GetCardById(key)).data;
-            data.count = value;
-            fullCards.push(data);
-        }
-        this.currentDeck.cards = fullCards;
-        let randomIndex = Math.floor(Math.random() * this.currentDeck.cards.length);
-        this.deckArt = this.currentDeck.cards[randomIndex].artCrop;
 
-        this.whitePercent = await this.colorPercentage('W');
-        this.bluePercent = await this.colorPercentage('U');
-        this.blackPercent = await this.colorPercentage('B');
-        this.redPercent = await this.colorPercentage('R');
-        this.greenPercent = await this.colorPercentage('G');
+        let randomIndex = Math.floor(Math.random() * this.deck.cards.length);
+        this.deckArt = this.deck.cards[randomIndex].artCrop;
 
-        let element = await document.getElementById("white");
-        element.style.width = `${this.whitePercent * 260}px`;
-        element = await document.getElementById("blue");
-        element.style.width = `${this.whitePercent * 260}px`;
-        element = await document.getElementById("black");
-        element.style.width = `${this.whitePercent * 260}px`;
-        element = await document.getElementById("red");
-        element.style.width = `${this.whitePercent * 260}px`;
-        element = await document.getElementById("greed");
-        element.style.width = `${this.whitePercent * 260}px`;
-
+        this.colorBreakdown();
+    },
+    mounted(){
+        //this.$nextTick(this.setColorBreakdown())
+        this.setColorBreakdown();
     },
     computed: {
         totalColorSymbols(){
-            const cards = this.currentDeck.cards;
+            const cards = this.deck.cards;
             const colors = ['W','U','B','R','G'];
             let count = 0.0;
             for(let i = 0; i < cards.length; i++){
@@ -116,21 +153,6 @@ export default{
         transform: skew(-20deg);
         box-shadow: 0 5px 25px 0 rgba(0,0,0,.25);
         margin-top: 15px;
-    }
-    #white{
-        background-color: #FFFCD3;
-    }
-    #blue{
-        background-color: #A9DCEF;
-    }
-    #black{
-        background-color: #C6BFB9;
-    }
-    #red{
-        background-color: #ECA285;
-    }
-    #green{
-        background-color: #90CDA3;
     }
     .color{
         height: 20px;

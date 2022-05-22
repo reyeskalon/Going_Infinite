@@ -3,6 +3,7 @@
     <router-link to="/" class="link">Home</router-link>
     <router-link to="/deck-builder" class="link">Deck Builder</router-link>
     <router-link to="/my-decks" class="link">My Decks</router-link>
+    <router-link to="/fnm" class="link">FNM</router-link>
   </div>
   
   <router-view />

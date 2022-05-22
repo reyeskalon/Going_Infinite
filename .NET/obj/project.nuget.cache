@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ffi9Cgfpz3tP7cRf7xb88zzAPw1A6agSd3f6yEDZ3B4V+yOYucC6BaFSG7ALg7HqY4ARermF1hYmTNot1cH/gQ==",
+  "dgSpecHash": "iGtIR0ZJCSs/htxZa3m25JHol8VwiZ44GtSz+foQUKyWcwLhQ9PjyxRe9+WCgcB4izf+ZngGZEbX7C0PFZ0tTg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\reyes\\Projects\\going_infinite\\.NET\\GoingInfinite.csproj",
+  "projectFilePath": "C:\\Users\\reyes\\Projects\\going_infinite\\Going_Infinite\\.NET\\GoingInfinite.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\reyes\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\reyes\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",

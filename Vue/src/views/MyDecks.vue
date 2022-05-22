@@ -1,6 +1,6 @@
 <template>
     <div id="decks">
-        <magic-deck v-for="deck in decks" :key="deck.id" :deck="deck"></magic-deck>
+        <magic-deck v-for="(deck, index) in decks" :key="deck.id" :deck="deck" :iteration="index"></magic-deck>
     </div>
 </template>
 
@@ -17,7 +17,7 @@ export default{
   created() {
         DeckService.GetDecksByPlayer(1)
         .then(response => {
-                this.decks = response.data;
+            this.decks = response.data;
         })
   }
 }
