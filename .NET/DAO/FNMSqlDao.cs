@@ -20,7 +20,10 @@ namespace GoingInfinite.DAO
                     cmd.Parameters.AddWithValue("@event_id", eventId);
 
                     SqlDataReader reader = cmd.ExecuteReader();
-                    draftEvent = CreateEventFromReader(reader);
+                    if (reader.Read())
+                    {
+                        draftEvent = CreateEventFromReader(reader);
+                    }
                 }
             }
             catch (Exception ex)
