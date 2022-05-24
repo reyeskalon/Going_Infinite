@@ -15,10 +15,10 @@ export default{
 
 <style scoped>
     .win{
-        background-color: rgb(34,130,34,.5);
+        background-color: rgb(34,130,34,1);
     }
     .loss{
-        background-color: rgb(202,33,43,.5);
+        background-color: rgb(202,33,43,1);
     }
     .draw{
         background-color: gray;

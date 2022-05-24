@@ -93,6 +93,36 @@ namespace GoingInfinite.DAO
 
             return games;
         }
+        public List<Game> GetGamesByEvent(int eventId)
+        {
+            List<Game> games = new List<Game>();
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT game_id, games.match_id, games.outcome FROM games " +
+                                                    "JOIN matches ON games.match_id = matches.match_id " +
+                                                    "WHERE matches.event_id = @event_id; ", conn);
+                    cmd.Parameters.AddWithValue("@event_id", eventId);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        games.Add(CreateGameFromReader(reader));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return games;
+        }
         public Game AddNewGame(Game game)
         {
             try

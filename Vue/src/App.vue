@@ -20,12 +20,11 @@ export default {
     display: flex;
     align-items: center;
     height: 50px;
-    background-color: #73777B;
+    background-color: rgba(21, 19, 60, .8);
     box-shadow: 0 5px 25px 0 rgba(0,0,0,.25);
   }
   .link{
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 40px;
     text-decoration: none;
     color: white;
     height: 48px;
@@ -35,6 +34,6 @@ export default {
   }
   .link:hover{
     color: #EC994B;
-    border-top-color: rgba(236, 153, 75, 1);;
+    border-top-color: rgba(236, 153, 75, 1);
   }
 </style>

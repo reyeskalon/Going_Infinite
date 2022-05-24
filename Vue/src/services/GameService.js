@@ -10,6 +10,9 @@ export default{
     GetGamesByPlayer(playerId){
         return axios.get('/Game/Player/' + playerId);
     },
+    GetGamesByEvent(eventId){
+        return axios.get('/Game/FNM/' + eventId);
+    },
     AddNewGame(game){
         return axios.post('/Game', game);
     },

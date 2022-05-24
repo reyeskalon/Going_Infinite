@@ -25,6 +25,11 @@ namespace GoingInfinite.Controllers
         {
             return GameDao.GetGamesByPlayer(playerId);
         }
+        [HttpGet("FNM/{eventId}")]
+        public List<Game> GetGamesByEvent(int eventId)
+        {
+            return GameDao.GetGamesByEvent(eventId);
+        }
         [HttpPost]
         public Game AddNewGame(Game game)
         {

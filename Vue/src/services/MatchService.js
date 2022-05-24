@@ -5,7 +5,7 @@ export default{
         return axios.get('/Match/' + matchId);
     },
     GetMatchesByEvent(eventId){
-        return axios.get('Match/Event/' + eventId);
+        return axios.get('/Match/Event/' + eventId);
     },
     GetMatchesByPlayer(playerId){
         return axios.get('/Match/Player/' + playerId);
