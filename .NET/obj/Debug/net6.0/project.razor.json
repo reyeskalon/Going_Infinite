@@ -1,5 +1,5 @@
 {
-  "FilePath": "c:\\Users\\reyes\\Projects\\going_infinite\\going_infinite.csproj",
+  "FilePath": "c:\\Users\\reyes\\Projects\\going_infinite\\Going_Infinite\\.NET\\GoingInfinite.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "6.0",
@@ -16295,7 +16295,7 @@
     ],
     "CSharpLanguageVersion": 1000
   },
-  "RootNamespace": "going_infinite",
+  "RootNamespace": "GoingInfinite",
   "Documents": [],
   "SerializationFormat": "0.2"
 }

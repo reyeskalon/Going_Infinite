@@ -18,102 +18,107 @@ export default {
     data() {
         return {
             events: [],
-            matches: [],
-            games: [],
+            playersEvents: [],
             numOfEvents: 5,
-            eventDates: [],
-            matchWinPercentages: [],
-            gameWinPercentages: [],
         };
     },
     methods: {
         async getData(){
-            let eventDates = [];
+            return new Promise((resolve) => {
+                let eventDates = [];
+                let matchWinPercentages = [];
+                let gameWinPercentages = [];
 
-            if(this.events.length < this.numOfEvents) {
-                for(let i = 0 ; i < this.events.length; i++){
-                    eventDates.push(this.events[i].eventDate.slice(0,10));
-                    await this.eventMatchWinPercent(this.events[i].eventId);
-                    await this.eventGameWinPercent(this.events[i].eventId);
+                if(this.events.length < this.numOfEvents) {
+                    for(let i = 0 ; i < this.events.length; i++){
+                        eventDates.push(this.events[i].eventDate.slice(0,10));
+                        this.getMatchAndGameWinPercentFromAnEvent(this.events[i].eventId)
+                        .then(response => {
+                            matchWinPercentages.push(response.data.matchWinPercent);
+                            gameWinPercentages.push(response.data.gameWinPercent);
+                        })
+                    }
+                    resolve({eventDates, matchWinPercentages, gameWinPercentages});
                 }
-                this.eventDates = eventDates;
-                return;
-            }
-            else { 
-                for(let i = 0; i < this.numOfEvents; i++){
-                    eventDates.push(this.events[i].eventDate.slice(0,10));
-                    await this.eventMatchWinPercent(this.events[i].eventId);
-                    await this.eventGameWinPercent(this.events[i].eventId);
+                else { 
+                    for(let i = 0; i < this.numOfEvents; i++){
+                        eventDates.push(this.events[i].eventDate.slice(0,10));
+                        this.getMatchAndGameWinPercentFromAnEvent(this.events[i].eventId)
+                        .then(response => {
+                            matchWinPercentages.push(response.data.matchWinPercent);
+                            gameWinPercentages.push(response.data.gameWinPercent);
+                        })
+                    }
+                    resolve({eventDates, matchWinPercentages, gameWinPercentages});
                 }
-                this.eventDates = eventDates;
-                return;
-            }
+            })
         },
-        async chartEvents() {
-            await this.getData();
-            const ctx = document.getElementById('events-chart');
-            const myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: this.eventDates,
-                    datasets: [{
-                        label: 'Match Win %',
-                        data: this.matchWinPercentages,
-                        backgroundColor: [
-                            'rgba(236, 153, 75, .2)'
-                        ],
-                        borderColor: [
-                            'rgba(236, 153, 75, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+        chartEvents() {
+            this.getData()
+            .then(response => {
+                const ctx = document.getElementById('events-chart');
+                const myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: response.data.eventDates,
+                        datasets: [{
+                            label: 'Match Win %',
+                            data: response.data.matchWinPercentages,
+                            backgroundColor: [
+                                'rgba(236, 153, 75, .2)'
+                            ],
+                            borderColor: [
+                                'rgba(236, 153, 75, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
                     },
-                    responsive: false,
-                    maintainAspectRatio: false,
-                }
-            })
-            myChart;
-        },
-        async eventMatchWinPercent(eventId){
-            let matches = [];
-            let winCount = 0;
-            MatchService.GetMatchesByEvent(eventId)
-            .then(response => {
-                matches = response.data;
-                for(let i = 0; i < matches.length; i++){
-                    if(matches[i].outcome == 'win'){
-                        winCount ++;
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        responsive: false,
+                        maintainAspectRatio: false,
                     }
-                }
-                this.matchWinPercentages.push(winCount/matches.length);
-                return;
+                });
+                myChart;
             })
         },
-        async eventGameWinPercent(eventId){
-            let games = [];
-            let winCount = 0;
-            GameService.GetGamesByEvent(eventId)
-            .then(response => {
-                games = response.data;
-                for(let i = 0; i < games.length; i++){
-                    if(games[i].outcome == 'win'){
-                        winCount ++;
+        getMatchAndGameWinPercentFromAnEvent(eventId){
+            return new Promise((resolve) => {
+                let matchWinPercent;
+                let gameWinPercent;
+                MatchService.GetMatchesByEvent(eventId)
+                .then(response => {
+                    let matches = response.data;
+                    let wonMatches = 0;
+                    for(let i = 0; i < matches.length; i++){
+                        if(matches[i].outcome == 'win'){
+                            wonMatches++;
+                        }
                     }
-                }
-                this.gameWinPercentages.push(winCount/games.length);
-                return;
-            })           
+                    matchWinPercent = wonMatches / matches.length;
+                    GameService.GetGamesByEvent(eventId)
+                    .then(response2 => {
+                        let games = response2.data;
+                        let wonGames = 0;
+                        for(let i = 0; i < games.length; i++){
+                            if(games[i].outcome == 'win'){
+                                wonGames++;
+                            }
+                        }
+                        gameWinPercent = wonGames / games.length;
+                        resolve({matchWinPercent, gameWinPercent});
+                    })
+                })
+            });
         }
     },
     created() {
         FNMService.GetEventsByPlayer(1)
-            .then(response => {
+        .then(response => {
             this.events = response.data;
             this.chartEvents();
         });
