@@ -11,7 +11,6 @@
             </div>
             <input id="search" v-model="queryString" placeholder="Search">
             <button id="save-button" @click="(submitDeck())">Save Deck</button>
-            <button id="save-button" @click="(getDeckById(1))">Get Deck</button>
         </div>
         <div id="cards">
             <button @click="showPrevious" v-if="startIndex > 0"><img class="btn-img" src="../assets/angle-double-left.png"></button>

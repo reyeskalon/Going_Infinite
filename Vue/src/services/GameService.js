@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { keyFor } from 'core-js/fn/symbol';
 
 export default{
     GetGameById(gameId){
@@ -12,6 +11,6 @@ export default{
         return axios.get('/Game/Player/' + playerId);
     },
     AddNewGame(game){
-        return axios.post('/Game', game)
+        return axios.post('/Game', game);
     },
 }

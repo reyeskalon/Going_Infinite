@@ -26,8 +26,8 @@ export default {
   computed: {
     filteredCards(){
       return this.cards.filter(card => {
-         const search = this.queryString.toLowerCase()
-         return card.name.toLowerCase().includes(search) || card.oracle_text.toLowerCase().includes(search) || card.type_line.toLowerCase().includes(search)
+        const search = this.queryString.toLowerCase()
+        return card.name.toLowerCase().includes(search) || card.oracle_text.toLowerCase().includes(search) || card.type_line.toLowerCase().includes(search)
       })
     }
   },

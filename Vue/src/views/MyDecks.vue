@@ -8,18 +8,20 @@
 import MagicDeck from '../components/MagicDeck.vue'
 import DeckService from '../services/DeckService.js'
 export default{
-  components: { MagicDeck },
-  data(){
-      return{
-          decks : {},
-      }
-  },
-  created() {
+    components: { 
+        MagicDeck 
+    },
+    data(){
+        return{
+            decks : {},
+        }
+    },
+    created() {
         DeckService.GetDecksByPlayer(1)
         .then(response => {
             this.decks = response.data;
         })
-  }
+    }
 }
 </script>
 

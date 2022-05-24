@@ -50,6 +50,36 @@ namespace GoingInfinite.DAO
             };
             return deck;
         }
+        public Deck GetDeckByEventAndPlayer(int eventId, int playerId)
+        {
+            Deck deck = null;
+            int deckId = 0;
+            List<Card> cards = new List<Card>();
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    con.Open();
+
+                    SqlCommand cmd = new SqlCommand("SELECT DISTINCT deck_id FROM matches WHERE event_id = @event_id AND player_id = @player_id;", con);
+                    cmd.Parameters.AddWithValue("@event_id", eventId);
+                    cmd.Parameters.AddWithValue("@player_id", playerId);
+
+                    deckId = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    if(deckId != 0)
+                    {
+                        deck = GetDeckById(deckId);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return deck;
+        }
         public List<Deck> GetDecksByPlayer(int playerId)
         {
             List<Deck> decks = new List<Deck>();

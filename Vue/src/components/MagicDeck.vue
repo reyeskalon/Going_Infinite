@@ -8,16 +8,25 @@
             <div :id="`red${iteration}`" class="color" v-if="redPercent > 0.05"></div>
             <div :id="`green${iteration}`" class="color" v-if="greenPercent > 0.05"></div>
         </div>
-        <p>Deck #{{deck.deckId}}</p>
     </div>
 </template>
 
 <script>
 export default{
-    props: ['deck', 'iteration'],
+    props: {
+        deck: {
+            type: Object,
+            default: function () {
+                return {cards: []}
+            }
+        },
+        iteration: {
+            type: Number,
+            default: 0
+        }
+    },
     data()  {
         return {
-            deckArt: "",
             whitePercent: 0,
             bluePercent: 0,
             blackPercent: 0,
@@ -43,22 +52,23 @@ export default{
             let greenCount = 0;
             for(let i = 0; i < cards.length; i++){
                 for(let j = 0; j < cards[i].manaCost.length; j++){
-                    if(cards[i].manaCost[j] == '{' || cards[i].manaCost == '}'){
+                    let char = cards[i].manaCost[j];
+                    if(char == '{' || char == '}'){
                         continue;
                     }
-                    else if(cards[i].manaCost[j] == 'W'){
+                    else if(char == 'W'){
                         whiteCount += 1;
                     }
-                    else if(cards[i].manaCost[j] == 'U'){
+                    else if(char == 'U'){
                         blueCount += 1;
                     }
-                    else if(cards[i].manaCost[j] == 'B'){
+                    else if(char == 'B'){
                         blackCount += 1;
                     }
-                    else if(cards[i].manaCost[j] == 'R'){
+                    else if(char == 'R'){
                         redCount += 1;
                     }
-                    else if(cards[i].manaCost[j] == 'G'){
+                    else if(char == 'G'){
                         greenCount += 1;
                     }
                 }
@@ -100,15 +110,10 @@ export default{
             }  
         }
     },
-    async created(){
-
-        let randomIndex = Math.floor(Math.random() * this.deck.cards.length);
-        this.deckArt = this.deck.cards[randomIndex].artCrop;
-
+    created(){
         this.colorBreakdown();
     },
     mounted(){
-        //this.$nextTick(this.setColorBreakdown())
         this.setColorBreakdown();
     },
     computed: {
@@ -123,8 +128,16 @@ export default{
                     }
                 }
             }
+            
             return count;
+        },
+        deckArt(){
+            let randomIndex = Math.floor(Math.random() * this.deck.cards.length);
+            return this.deck.cards[randomIndex].artCrop;
         }
+    },
+    watch: {
+
     }
 }
 </script>

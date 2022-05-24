@@ -18,7 +18,12 @@ namespace GoingInfinite.Controllers
         {
             return DeckDao.GetDeckById(deckId);
         }
-        [HttpGet("/Decks/{playerId}")]
+        [HttpGet("Event/{eventId}/{playerId}")]
+        public Deck GetDeckByEvent(int eventId, int playerId)
+        {
+            return DeckDao.GetDeckByEventAndPlayer(eventId, playerId);
+        }
+        [HttpGet("Player/{playerId}")]
         public List<Deck> GetDecksByPlayer(int playerId)
         {
             return DeckDao.GetDecksByPlayer(playerId);
