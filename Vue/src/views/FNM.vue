@@ -8,7 +8,7 @@
 <script>
 import FNMService from '../services/FNMService.js';
 import MatchService from '@/services/MatchService.js';
-import GameService from '@/services/GameService.js';
+// import GameService from '@/services/GameService.js';
 import EventCard from '../components/EventCard.vue';
 import Chart from 'chart.js/auto';
 export default {
@@ -18,39 +18,27 @@ export default {
     data() {
         return {
             events: [],
-            playersEvents: [],
             numOfEvents: 5,
         };
     },
     methods: {
-        async getData(){
+        getData(){
             return new Promise((resolve) => {
-                let eventDates = [];
-                let matchWinPercentages = [];
-                let gameWinPercentages = [];
-
-                if(this.events.length < this.numOfEvents) {
-                    for(let i = 0 ; i < this.events.length; i++){
-                        eventDates.push(this.events[i].eventDate.slice(0,10));
-                        this.getMatchAndGameWinPercentFromAnEvent(this.events[i].eventId)
-                        .then(response => {
-                            matchWinPercentages.push(response.data.matchWinPercent);
-                            gameWinPercentages.push(response.data.gameWinPercent);
-                        })
+                let eventDates = this.events.map( event => event.eventDate);
+                let matchWinPercentages = this.events.map( event => {
+                    let wonMatches = 0;
+                    for(let i = 0; i < event.matches.length; i++){
+                        if(event.matches[i].outcome == 'win'){
+                            wonMatches++;
+                        }
                     }
-                    resolve({eventDates, matchWinPercentages, gameWinPercentages});
+                    return wonMatches/ event.matches.length;
+                });
+                let returnObj = {
+                    eventDates : eventDates,
+                    matchWinPercentages : matchWinPercentages
                 }
-                else { 
-                    for(let i = 0; i < this.numOfEvents; i++){
-                        eventDates.push(this.events[i].eventDate.slice(0,10));
-                        this.getMatchAndGameWinPercentFromAnEvent(this.events[i].eventId)
-                        .then(response => {
-                            matchWinPercentages.push(response.data.matchWinPercent);
-                            gameWinPercentages.push(response.data.gameWinPercent);
-                        })
-                    }
-                    resolve({eventDates, matchWinPercentages, gameWinPercentages});
-                }
+                resolve(returnObj);
             })
         },
         chartEvents() {
@@ -60,10 +48,10 @@ export default {
                 const myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: response.data.eventDates,
+                        labels: response.eventDates,
                         datasets: [{
                             label: 'Match Win %',
-                            data: response.data.matchWinPercentages,
+                            data: response.matchWinPercentages,
                             backgroundColor: [
                                 'rgba(236, 153, 75, .2)'
                             ],
@@ -86,42 +74,36 @@ export default {
                 myChart;
             })
         },
-        getMatchAndGameWinPercentFromAnEvent(eventId){
+        setEventProps(events){
             return new Promise((resolve) => {
-                let matchWinPercent;
-                let gameWinPercent;
-                MatchService.GetMatchesByEvent(eventId)
-                .then(response => {
-                    let matches = response.data;
-                    let wonMatches = 0;
-                    for(let i = 0; i < matches.length; i++){
-                        if(matches[i].outcome == 'win'){
-                            wonMatches++;
-                        }
-                    }
-                    matchWinPercent = wonMatches / matches.length;
-                    GameService.GetGamesByEvent(eventId)
-                    .then(response2 => {
-                        let games = response2.data;
-                        let wonGames = 0;
-                        for(let i = 0; i < games.length; i++){
-                            if(games[i].outcome == 'win'){
-                                wonGames++;
-                            }
-                        }
-                        gameWinPercent = wonGames / games.length;
-                        resolve({matchWinPercent, gameWinPercent});
+                let promises = events.map( event => {
+                    MatchService.GetMatchesByEvent(event.eventId)
+                    .then(response => {
+                        event.matches = response.data;
+                        return event;
                     })
                 })
-            });
-        }
+                Promise.all(promises).then( results => resolve(results));
+            })
+            
+        },
     },
-    created() {
+    async created() {
         FNMService.GetEventsByPlayer(1)
         .then(response => {
-            this.events = response.data;
-            this.chartEvents();
-        });
+            let events = response.data;
+            let promises = events.map( event => {
+                return MatchService.GetMatchesByEvent(event.eventId)
+                .then(response => {
+                    event.matches = response.data;
+                    return event;
+                })
+            })
+            Promise.all(promises).then( results => {
+                this.events = results;
+                this.chartEvents();
+            });
+        })
     },
     mounted() {
         
